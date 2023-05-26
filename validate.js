@@ -147,7 +147,7 @@ form.addEventListener('submit', function(event) {
 		if (rpassword.value !== password.value) {
 			rpassword.setAttribute('style', 'border:solid 3px rgb(255, 155, 155);');
 			isValid = false;
-			repasswordError = 'Repassword be the same with password field';
+			repasswordError = 'Repassword must be the same with password field';
 		} else {
 			rpassword.setAttribute('style', 'none');
 		}
@@ -229,7 +229,7 @@ form.addEventListener('submit', function(event) {
 
 
 
-	let errorMessages = [firstnameError, lastnameError, emailError, passwordError, repasswordError, streetunitError, barangayError, cityError, passwordError, zipcodeError, messageError, checkboxError];
+	let errorMessages = [firstnameError, lastnameError, emailError, passwordError, repasswordError, streetunitError, barangayError, cityError, zipcodeError, messageError, checkboxError];
 	let tobeannounce ="";
 
 
@@ -248,7 +248,7 @@ form.addEventListener('submit', function(event) {
 		form.reset(); 
 	}
 	else{
-		console.log(firstnameError, lastnameError, emailError, passwordError, repasswordError, streetunitError, barangayError, cityError, passwordError, zipcodeError, messageError, checkboxError);
+		console.log(firstnameError, lastnameError, emailError, passwordError, repasswordError, streetunitError, barangayError, cityError, zipcodeError, messageError, checkboxError);
 
 
 		// filteredArray.forEach(errorMessage => {
@@ -270,6 +270,8 @@ form.addEventListener('submit', function(event) {
 			text: 'Something went wrong!',
 			footer: '<a href="">Why do I have this issue?</a>'
 		})
+		tobeannounce ="";
+
 	}
 });
 
