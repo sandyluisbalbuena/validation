@@ -14,10 +14,11 @@ let province = document.getElementById('province');
 let barangay = document.getElementById('barangay');
 let streetUnit = document.getElementById('streetUnit');
 
+let userValues = [];
+
 
 form.addEventListener('submit', function(event) {
-	event.preventDefault(); // Prevent form submission
-
+	event.preventDefault(); 
 	// Perform validation
 	var isValid = true;
 	// var regex = /\d/;
@@ -42,7 +43,7 @@ form.addEventListener('submit', function(event) {
 		isValid = false;
 		firstnameError = 'Firstname Required';
 	} else {
-		if(firstName.value.length < 1){
+		if(firstName.value.length < 2){
 			firstName.setAttribute('style', 'border:solid 3px rgb(255, 155, 155);');
 			isValid = false;
 			firstnameError = 'Firstname Must be atleast 2 character';
@@ -58,6 +59,8 @@ form.addEventListener('submit', function(event) {
 					firstnameError = 'Firstname Must not longer than 20 characters';
 				} else {
 					firstName.setAttribute('style', 'none');
+
+					userValues.push(firstName.value);
 				}
 			}
 		}
@@ -76,6 +79,7 @@ form.addEventListener('submit', function(event) {
 			middlenameError = 'Middlename Must not longer than 20 characters';
 		} else {
 			middleName.setAttribute('style', 'none');
+			userValues.push(middleName.value);
 		}
 	}
 
@@ -86,7 +90,7 @@ form.addEventListener('submit', function(event) {
 		isValid = false;
 		lastnameError = 'Lastname Required';
 	} else {
-		if (lastName.value.length < 1) {
+		if (lastName.value.length < 2) {
 			lastName.setAttribute('style', 'border:solid 3px rgb(255, 155, 155);');
 			isValid = false;
 			lastnameError = 'Lastname Must be atleast 2 character';
@@ -102,6 +106,7 @@ form.addEventListener('submit', function(event) {
 					middlenameError = 'Lastname Must not longer than 20 characters';
 				} else {
 					lastName.setAttribute('style', 'none');
+					userValues.push(lastName.value);
 				}
 			}
 		}
@@ -119,6 +124,7 @@ form.addEventListener('submit', function(event) {
 			emailError = 'Email Invalid format';
 		} else {
 			email.setAttribute('style', 'none');
+			userValues.push(email.value);
 		}
 	}
 	
@@ -135,6 +141,7 @@ form.addEventListener('submit', function(event) {
 			passwordError = 'Password Must be atleast 8 characters';
 		} else {
 			password.setAttribute('style', 'none');
+			userValues.push(password.value);
 		}
 	}
 
@@ -169,6 +176,7 @@ form.addEventListener('submit', function(event) {
 		streetunitError = 'Street Required';
 	} else {
 		streetUnit.setAttribute('style', 'none');
+		userValues.push(streetUnit.value);
 	}
 
 	//city
@@ -178,6 +186,7 @@ form.addEventListener('submit', function(event) {
 		cityError = 'City Required';
 	} else {
 		city.setAttribute('style', 'none');
+		userValues.push(city.value);
 	}
 
 	//province
@@ -187,6 +196,8 @@ form.addEventListener('submit', function(event) {
 		provinceError = 'Province Required';
 	} else {
 		province.setAttribute('style', 'none');
+		userValues.push(province.value);
+
 	}
 
 	//barangay
@@ -196,6 +207,8 @@ form.addEventListener('submit', function(event) {
 		barangayError = 'Barangay Required';
 	} else {
 		barangay.setAttribute('style', 'none');
+		userValues.push(barangay.value);
+
 	}
 
 
@@ -211,6 +224,8 @@ form.addEventListener('submit', function(event) {
 			zipcodeError = 'Zipcode Must be numeric';
 		} else {
 			zipcode.setAttribute('style', 'none');
+		userValues.push(zipcode.value);
+
 		}
 	}
 
@@ -225,6 +240,8 @@ form.addEventListener('submit', function(event) {
 		messageError = 'Message Required';
 	} else {
 		message.setAttribute('style', 'none');
+		userValues.push(message.value);
+		
 	}
 
 
@@ -240,12 +257,65 @@ form.addEventListener('submit', function(event) {
 
 	// If all fields are valid, submit the form
 	if (isValid) {
-		Swal.fire(
-			'Good job!',
-			'Registration Complete',
-			'success'
-		)
+
+		let urlvalues = '';
+
+
+		userValues.forEach(values => {
+			urlvalues += "<p class='text-sm'>"+values+"<p>";
+		});
+
+
+
+		Swal.fire({
+			icon: 'success',
+			title: urlvalues,
+		})
+
+
+		// Swal.fire(
+		// 	'Good job!',
+		// 	'Registration Complete',
+		// 	'success'
+		// )
+
+		// if (isSuccessful) {
+			// Allow form submission if it was successful
+			// form.removeEventListener("submit", preventDefault);
+			// form.submit();
+
+
+		form.action = "success.html";
 		form.reset(); 
+
+
+		userValues = [];
+		//   }
+
+		// + "?name=" + encodeURIComponent(name) + "&email=" + encodeURIComponent(email);
+
+		// console.log(firstName.value);
+
+
+		// let urlvalues="?values=";
+
+		// userValues.forEach(values => {
+		// 	urlvalues += encodeURIComponent(values)+",";
+		// });
+
+		// let finalurl = urlvalues.slice(0, -1);
+
+
+
+		// // let url =  "success.html"  + "?fname=" + encodeURIComponent(firstName.value) + "&lname=" + encodeURIComponent(lastName.value);
+		// let url =  "success.html"  + finalurl;
+
+		// // window.location.href = "success.html";
+
+		// window.location.href = url;
+		// form.reset(); 
+
+
 	}
 	else{
 		console.log(firstnameError, lastnameError, emailError, passwordError, repasswordError, streetunitError, barangayError, cityError, zipcodeError, messageError, checkboxError);
@@ -287,16 +357,16 @@ function hasNumberUsingIsNaN(str) {
 
 function hasNumberUsingNumber(str) {
 	return !isNaN(Number(str));
-  }
+}
 
-  function containsNumbers(str) {
+function containsNumbers(str) {
 	return /\d/.test(str);
-  }
+}
 
-  function isNumericUsingRegex(str) {
+function isNumericUsingRegex(str) {
 	var regex = /^\d+$/;
 	return regex.test(str);
-  }
+}
 
 function isNumericRegex(str) {
 	var regex = /^[+-]?\d+(\.\d+)?$/;
